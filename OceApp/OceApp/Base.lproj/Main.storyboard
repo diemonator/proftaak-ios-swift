@@ -169,6 +169,12 @@
                     <navigationItem key="navigationItem" title="Details" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="imageView" destination="XRq-2u-x7E" id="8gu-bY-qvj"/>
+                        <outlet property="labelCyan" destination="oAZ-2i-GYs" id="Kk2-3f-S5q"/>
+                        <outlet property="labelKey" destination="wO8-Bg-DIu" id="ckK-y5-oWt"/>
+                        <outlet property="labelMagenta" destination="Qa1-IX-42a" id="1jh-7F-dC0"/>
+                        <outlet property="labelOil" destination="3nl-sx-Bqa" id="qKY-3u-H99"/>
+                        <outlet property="labelPaper" destination="IZR-fl-57L" id="uDP-au-URo"/>
+                        <outlet property="labelYellow" destination="izf-cp-zw4" id="WTW-Jp-n4b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>

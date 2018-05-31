@@ -10,7 +10,13 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
+    @IBOutlet weak var labelCyan: UILabel!
+    @IBOutlet weak var labelYellow: UILabel!
+    @IBOutlet weak var labelMagenta: UILabel!
+    @IBOutlet weak var labelKey: UILabel!
     
+    @IBOutlet weak var labelOil: UILabel!
+    @IBOutlet weak var labelPaper: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
     func configureView() {
