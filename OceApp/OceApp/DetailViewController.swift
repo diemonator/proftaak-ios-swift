@@ -19,9 +19,14 @@ class DetailViewController: UIViewController {
     @IBOutlet weak var labelPaper: UILabel!
     @IBOutlet weak var imageView: UIImageView!
     
+    var timer: Timer?
+    
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = printer {
+            if let label = labelCyan {
+                label.text = String(detail.inkCyan)
+            }
             if let imgView = imageView {
                 // setting printer details on views
                 imgView.image = detail.printerImage
@@ -45,7 +50,32 @@ class DetailViewController: UIViewController {
         didSet {
             // Update the view.
             configureView()
+            if timer == nil {
+                timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
+            }
         }
     }
+ 
+    @objc func updateLabels() {
+        if let label = labelCyan {
+            label.text = String(printer!.inkCyan)
+        }
+        if let label = labelKey {
+            label.text = String(printer!.inkKey)
+        }
+        if let label = labelOil {
+            label.text = String(printer!.oil)
+        }
+        if let label = labelPaper {
+            label.text = String(printer!.paper)
+        }
+        if let label = labelYellow {
+            label.text = String(printer!.inkYellow)
+        }
+        if let label = labelMagenta {
+            label.text = String(printer!.inkMagenta)
+        }
+        
+    }
+    
 }
-

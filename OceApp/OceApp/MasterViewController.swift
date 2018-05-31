@@ -9,11 +9,11 @@
 import UIKit
 
 class MasterViewController: UITableViewController {
-    
     var detailViewController: DetailViewController? = nil
     // hardcoded printers
     var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDEAL", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDEAL", image: UIImage(named: "printerC")!)]
 
+    var timer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,9 @@ class MasterViewController: UITableViewController {
         if let split = splitViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
+        }
+        if timer == nil {
+            timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
         }
     }
 
@@ -100,7 +103,28 @@ class MasterViewController: UITableViewController {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
         }
     }
-
-
+    
+    @objc func timerPrinter() {
+        printers[0].inkCyan -= 1
+        printers[1].inkCyan -= 2
+        printers[2].inkCyan -= 3
+        printers[0].inkMagenta -= 3
+        printers[1].inkMagenta -= 2
+        printers[2].inkMagenta -= 1
+        printers[0].inkKey -= 1
+        printers[1].inkKey -= 2
+        printers[2].inkKey -= 3
+        printers[0].inkYellow -= 1
+        printers[1].inkYellow -= 2
+        printers[2].inkYellow -= 3
+        
+        printers[0].paper -= 1
+        printers[1].paper -= 1
+        printers[2].paper -= 1
+        
+        printers[0].oil -= 1
+        printers[1].oil -= 2
+        printers[2].oil -= 3
+    }
 }
 
