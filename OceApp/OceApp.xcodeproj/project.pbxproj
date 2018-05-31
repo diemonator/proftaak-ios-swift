@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		83309E9320BFF5B90037B036 /* Printer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83309E9220BFF5B90037B036 /* Printer.swift */; };
+		83309E9520C002D70037B036 /* CustomeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83309E9420C002D70037B036 /* CustomeTableCell.swift */; };
 		836CD36520BFF345000E61C8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CD36420BFF345000E61C8 /* AppDelegate.swift */; };
 		836CD36720BFF345000E61C8 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CD36620BFF345000E61C8 /* MasterViewController.swift */; };
 		836CD36920BFF345000E61C8 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 836CD36820BFF345000E61C8 /* DetailViewController.swift */; };
@@ -16,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		83309E9220BFF5B90037B036 /* Printer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printer.swift; sourceTree = "<group>"; };
+		83309E9420C002D70037B036 /* CustomeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomeTableCell.swift; sourceTree = "<group>"; };
 		836CD36120BFF345000E61C8 /* OceApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OceApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		836CD36420BFF345000E61C8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		836CD36620BFF345000E61C8 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +67,8 @@
 				836CD36D20BFF346000E61C8 /* Assets.xcassets */,
 				836CD36F20BFF346000E61C8 /* LaunchScreen.storyboard */,
 				836CD37220BFF346000E61C8 /* Info.plist */,
+				83309E9220BFF5B90037B036 /* Printer.swift */,
+				83309E9420C002D70037B036 /* CustomeTableCell.swift */,
 			);
 			path = OceApp;
 			sourceTree = "<group>";
@@ -138,6 +144,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83309E9320BFF5B90037B036 /* Printer.swift in Sources */,
+				83309E9520C002D70037B036 /* CustomeTableCell.swift in Sources */,
 				836CD36920BFF345000E61C8 /* DetailViewController.swift in Sources */,
 				836CD36720BFF345000E61C8 /* MasterViewController.swift in Sources */,
 				836CD36520BFF345000E61C8 /* AppDelegate.swift in Sources */,

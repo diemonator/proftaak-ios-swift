@@ -15,9 +15,9 @@ class DetailViewController: UIViewController {
 
     func configureView() {
         // Update the user interface for the detail item.
-        if let detail = detailItem {
+        if let detail = printer {
             if let label = detailDescriptionLabel {
-                label.text = detail.description
+                label.text = detail.printerName
             }
         }
     }
@@ -33,7 +33,7 @@ class DetailViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    var detailItem: NSDate? {
+    var printer: Printer? {
         didSet {
             // Update the view.
             configureView()

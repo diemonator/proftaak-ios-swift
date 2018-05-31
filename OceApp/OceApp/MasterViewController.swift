@@ -9,9 +9,9 @@
 import UIKit
 
 class MasterViewController: UITableViewController {
-
+    
     var detailViewController: DetailViewController? = nil
-    var objects = [Any]()
+    var printers = [Printer]()
 
 
     override func viewDidLoad() {
@@ -25,6 +25,7 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+        printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDEAL"),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE"),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDEAL")]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -39,7 +40,7 @@ class MasterViewController: UITableViewController {
 
     @objc
     func insertNewObject(_ sender: Any) {
-        objects.insert(NSDate(), at: 0)
+        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDEAL"), at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
@@ -49,9 +50,9 @@ class MasterViewController: UITableViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row] as! NSDate
+                let printer = printers[indexPath.row]
                 let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
-                controller.detailItem = object
+                controller.printer = printer
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
             }
@@ -65,14 +66,20 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+        return printers.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-
-        let object = objects[indexPath.row] as! NSDate
-        cell.textLabel!.text = object.description
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableCell
+        let printer = printers[indexPath.row]
+        cell.printerNameLabel.text = printer.printerName
+        cell.printerStateLabel.text = printer.printerStatus
+        cell.printerStatusImgView.layer.borderWidth = 1.5
+        cell.printerStatusImgView.layer.masksToBounds = false
+        cell.printerStatusImgView.layer.borderColor = UIColor.black.cgColor
+        cell.printerStatusImgView.layer.cornerRadius = cell.printerStatusImgView.frame.size.width / 2
+        cell.printerStatusImgView.clipsToBounds = true
+        cell.printerStatusImgView.backgroundColor = printer.printerGeneralState
         return cell
     }
 
@@ -83,7 +90,7 @@ class MasterViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
-            objects.remove(at: indexPath.row)
+            printers.remove(at: indexPath.row)
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
