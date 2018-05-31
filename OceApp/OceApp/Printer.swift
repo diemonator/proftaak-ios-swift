@@ -12,10 +12,19 @@ class Printer: NSObject {
     var printerName: String!
     var printerGeneralState: UIColor
     var printerStatus: String
+    var printerImage: UIImage?
+    
+    init(name: String, priterColorState: UIColor, status: String, image: UIImage) {
+        self.printerName = name
+        self.printerGeneralState = priterColorState
+        self.printerStatus = status
+        printerImage = image
+    }
     
     init(name: String, priterColorState: UIColor, status: String) {
         self.printerName = name
-        self.printerGeneralState = priterColorState;
-        self.printerStatus = status;
+        self.printerGeneralState = priterColorState
+        self.printerStatus = status
+        printerImage = nil
     }
 }

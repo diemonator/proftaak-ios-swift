@@ -11,7 +11,8 @@ import UIKit
 class MasterViewController: UITableViewController {
     
     var detailViewController: DetailViewController? = nil
-    var printers = [Printer]()
+    // hardcoded printers
+    var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDEAL", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDEAL", image: UIImage(named: "printerC")!)]
 
 
     override func viewDidLoad() {
@@ -25,7 +26,6 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDEAL"),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE"),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDEAL")]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -48,6 +48,7 @@ class MasterViewController: UITableViewController {
     // MARK: - Segues
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        // Sending printer to Detailed view
         if segue.identifier == "showDetail" {
             if let indexPath = tableView.indexPathForSelectedRow {
                 let printer = printers[indexPath.row]
@@ -70,8 +71,11 @@ class MasterViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        // Using CustomTableCell class to get items from it
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! CustomTableCell
+        // Setting printer
         let printer = printers[indexPath.row]
+        // Setting labels and imageView with background color also making it round
         cell.printerNameLabel.text = printer.printerName
         cell.printerStateLabel.text = printer.printerStatus
         cell.printerStatusImgView.layer.borderWidth = 1.5

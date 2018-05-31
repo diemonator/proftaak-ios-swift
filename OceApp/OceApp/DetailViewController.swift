@@ -9,15 +9,17 @@
 import UIKit
 
 class DetailViewController: UIViewController {
-
-    @IBOutlet weak var detailDescriptionLabel: UILabel!
-
-
+    
+    
+    @IBOutlet weak var imageView: UIImageView!
+    
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = printer {
-            if let label = detailDescriptionLabel {
-                label.text = detail.printerName
+            if let imgView = imageView {
+                // setting printer details on views
+                imgView.image = detail.printerImage
+                self.navigationItem.title = detail.printerName
             }
         }
     }
@@ -39,7 +41,5 @@ class DetailViewController: UIViewController {
             configureView()
         }
     }
-
-
 }
 
