@@ -24,9 +24,6 @@ class DetailViewController: UIViewController {
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = printer {
-            if let label = labelCyan {
-                label.text = String(detail.inkCyan)
-            }
             if let imgView = imageView {
                 // setting printer details on views
                 imgView.image = detail.printerImage
@@ -51,31 +48,30 @@ class DetailViewController: UIViewController {
             // Update the view.
             configureView()
             if timer == nil {
-                timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
+                timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
             }
         }
     }
  
     @objc func updateLabels() {
+        let char = " %"
         if let label = labelCyan {
-            label.text = String(printer!.inkCyan)
+            label.text = String(printer!.inkCyan) + char
         }
         if let label = labelKey {
-            label.text = String(printer!.inkKey)
+            label.text = String(printer!.inkKey) + char
         }
         if let label = labelOil {
-            label.text = String(printer!.oil)
+            label.text = String(printer!.oil) + char
         }
         if let label = labelPaper {
-            label.text = String(printer!.paper)
+            label.text = String(printer!.paper) + char
         }
         if let label = labelYellow {
-            label.text = String(printer!.inkYellow)
+            label.text = String(printer!.inkYellow) + char
         }
         if let label = labelMagenta {
-            label.text = String(printer!.inkMagenta)
+            label.text = String(printer!.inkMagenta) + char
         }
-        
     }
-    
 }

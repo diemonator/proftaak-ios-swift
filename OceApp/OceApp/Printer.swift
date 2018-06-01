@@ -32,17 +32,5 @@ class Printer: NSObject {
         oil = 100
         printerImage = image
     }
-    
-    init(name: String, priterColorState: UIColor, status: String) {
-        self.printerName = name
-        self.printerGeneralState = priterColorState
-        self.printerStatus = status
-        printerImage = nil
-        inkKey = 100
-        inkCyan = 100
-        inkYellow = 100
-        inkMagenta = 100
-        paper = 100
-        oil = 100
-    }
 }
+

@@ -61,14 +61,14 @@
 			isa = PBXGroup;
 			children = (
 				836CD36420BFF345000E61C8 /* AppDelegate.swift */,
+				83309E9220BFF5B90037B036 /* Printer.swift */,
+				83309E9420C002D70037B036 /* CustomeTableCell.swift */,
 				836CD36620BFF345000E61C8 /* MasterViewController.swift */,
 				836CD36820BFF345000E61C8 /* DetailViewController.swift */,
 				836CD36A20BFF345000E61C8 /* Main.storyboard */,
 				836CD36D20BFF346000E61C8 /* Assets.xcassets */,
 				836CD36F20BFF346000E61C8 /* LaunchScreen.storyboard */,
 				836CD37220BFF346000E61C8 /* Info.plist */,
-				83309E9220BFF5B90037B036 /* Printer.swift */,
-				83309E9420C002D70037B036 /* CustomeTableCell.swift */,
 			);
 			path = OceApp;
 			sourceTree = "<group>";

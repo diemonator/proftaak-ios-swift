@@ -43,7 +43,7 @@ class MasterViewController: UITableViewController {
 
     @objc
     func insertNewObject(_ sender: Any) {
-        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDEAL"), at: 0)
+        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDEAL", image: UIImage(named: "horizontalLine")!), at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
@@ -104,24 +104,29 @@ class MasterViewController: UITableViewController {
         }
     }
     
+    // Timer decreases the values of the printers properties
     @objc func timerPrinter() {
+        // Cyan Ink
         printers[0].inkCyan -= 1
         printers[1].inkCyan -= 2
         printers[2].inkCyan -= 3
+        // Magenta
         printers[0].inkMagenta -= 3
         printers[1].inkMagenta -= 2
         printers[2].inkMagenta -= 1
-        printers[0].inkKey -= 1
-        printers[1].inkKey -= 2
+        // Key
+        printers[0].inkKey -= 2
+        printers[1].inkKey -= 1
         printers[2].inkKey -= 3
-        printers[0].inkYellow -= 1
-        printers[1].inkYellow -= 2
-        printers[2].inkYellow -= 3
-        
+        // Yellow
+        printers[0].inkYellow -= 4
+        printers[1].inkYellow -= 3
+        printers[2].inkYellow -= 2
+        // paper
         printers[0].paper -= 1
         printers[1].paper -= 1
         printers[2].paper -= 1
-        
+        // oil
         printers[0].oil -= 1
         printers[1].oil -= 2
         printers[2].oil -= 3
