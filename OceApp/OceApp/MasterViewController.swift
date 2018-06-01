@@ -11,7 +11,7 @@ import UIKit
 class MasterViewController: UITableViewController {
     var detailViewController: DetailViewController? = nil
     // hardcoded printers
-    var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDEAL", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDEAL", image: UIImage(named: "printerC")!)]
+    var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDLE", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDLE", image: UIImage(named: "printerC")!)]
 
     var timer: Timer?
 
@@ -43,7 +43,7 @@ class MasterViewController: UITableViewController {
 
     @objc
     func insertNewObject(_ sender: Any) {
-        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDEAL", image: UIImage(named: "horizontalLine")!), at: 0)
+        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDLE", image: UIImage(named: "horizontalLine")!), at: 0)
         let indexPath = IndexPath(row: 0, section: 0)
         tableView.insertRows(at: [indexPath], with: .automatic)
     }
