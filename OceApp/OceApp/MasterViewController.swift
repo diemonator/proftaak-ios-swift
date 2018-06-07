@@ -27,7 +27,7 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
         }
     }
 

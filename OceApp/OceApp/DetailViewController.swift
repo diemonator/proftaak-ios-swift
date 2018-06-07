@@ -10,14 +10,15 @@ import UIKit
 
 class DetailViewController: UIViewController {
     
-    @IBOutlet weak var labelCyan: UILabel!
-    @IBOutlet weak var labelYellow: UILabel!
-    @IBOutlet weak var labelMagenta: UILabel!
-    @IBOutlet weak var labelKey: UILabel!
+    @IBOutlet var lCyan: UILabel!
+    @IBOutlet var lYellow: UILabel!
+    @IBOutlet var lMagenta: UILabel!
+    @IBOutlet var lOil: UILabel!
+    @IBOutlet var lPaper: UILabel!
+    @IBOutlet var lKey: UILabel!
     
-    @IBOutlet weak var labelOil: UILabel!
-    @IBOutlet weak var labelPaper: UILabel!
     @IBOutlet weak var imageView: UIImageView!
+
     
     var timer: Timer?
     
@@ -55,23 +56,11 @@ class DetailViewController: UIViewController {
  
     @objc func updateLabels() {
         let char = " %"
-        if let label = labelCyan {
-            label.text = String(printer!.inkCyan) + char
-        }
-        if let label = labelKey {
-            label.text = String(printer!.inkKey) + char
-        }
-        if let label = labelOil {
-            label.text = String(printer!.oil) + char
-        }
-        if let label = labelPaper {
-            label.text = String(printer!.paper) + char
-        }
-        if let label = labelYellow {
-            label.text = String(printer!.inkYellow) + char
-        }
-        if let label = labelMagenta {
-            label.text = String(printer!.inkMagenta) + char
-        }
+        lCyan.text = String(printer!.inkCyan) + char
+        lKey.text = String(printer!.inkKey) + char
+        lOil.text = String(printer!.oil) + char
+        lPaper.text = String(printer!.paper) + char
+        lYellow.text = String(printer!.inkYellow) + char
+        lMagenta.text = String(printer!.inkMagenta) + char
     }
 }

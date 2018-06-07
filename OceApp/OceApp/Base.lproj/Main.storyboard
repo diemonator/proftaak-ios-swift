@@ -169,12 +169,12 @@
                     <navigationItem key="navigationItem" title="Details" id="mOI-FS-AaM"/>
                     <connections>
                         <outlet property="imageView" destination="XRq-2u-x7E" id="8gu-bY-qvj"/>
-                        <outlet property="labelCyan" destination="oAZ-2i-GYs" id="Kk2-3f-S5q"/>
-                        <outlet property="labelKey" destination="wO8-Bg-DIu" id="ckK-y5-oWt"/>
-                        <outlet property="labelMagenta" destination="Qa1-IX-42a" id="1jh-7F-dC0"/>
-                        <outlet property="labelOil" destination="3nl-sx-Bqa" id="qKY-3u-H99"/>
-                        <outlet property="labelPaper" destination="IZR-fl-57L" id="uDP-au-URo"/>
-                        <outlet property="labelYellow" destination="izf-cp-zw4" id="WTW-Jp-n4b"/>
+                        <outlet property="lCyan" destination="oAZ-2i-GYs" id="L0B-6Q-G68"/>
+                        <outlet property="lKey" destination="wO8-Bg-DIu" id="iEF-1F-tO3"/>
+                        <outlet property="lMagenta" destination="Qa1-IX-42a" id="MIW-l9-Qrp"/>
+                        <outlet property="lOil" destination="3nl-sx-Bqa" id="BXC-yR-G0j"/>
+                        <outlet property="lPaper" destination="IZR-fl-57L" id="NV7-xv-2VY"/>
+                        <outlet property="lYellow" destination="izf-cp-zw4" id="qjK-9I-IZe"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FJe-Yq-33r" sceneMemberID="firstResponder"/>
@@ -216,15 +216,15 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <color key="backgroundColor" red="0.21690317988395691" green="0.66513580083847046" blue="0.086967743933200836" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </imageView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aan-RD-PFa">
-                                            <rect key="frame" x="242" y="15" width="85" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrN-Gd-03e">
+                                            <rect key="frame" x="16" y="15" width="141" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SrN-Gd-03e">
-                                            <rect key="frame" x="16" y="16" width="243" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aan-RD-PFa">
+                                            <rect key="frame" x="186" y="14" width="76" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>

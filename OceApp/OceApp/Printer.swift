@@ -9,28 +9,49 @@
 import UIKit
 
 class Printer: NSObject {
+    
+    private var voil = 100
+    private var vpaper = 100
+    private var vcyan = 100
+    private var vmagenta = 100
+    private var vyellow = 100
+    private var vkey = 100
+
+    var printerImage: UIImage!
     var printerName: String!
-    var printerGeneralState: UIColor
+    var printerGeneralState: UIColor 
     var printerStatus: String
-    var printerImage: UIImage?
-    var inkCyan: Int
-    var inkYellow: Int
-    var inkKey: Int
-    var inkMagenta: Int
-    var paper: Int
-    var oil: Int
+
+    var inkCyan: Int {
+        get { return vcyan }
+        set (aNewValue) { if (aNewValue >= 0) { vcyan = aNewValue } }
+    }
+    var inkYellow: Int {
+        get { return vyellow }
+        set (aNewValue) { if (aNewValue >= 0) { vyellow = aNewValue } }
+    }
+    var inkKey: Int {
+        get { return vkey }
+        set (aNewValue) { if (aNewValue >= 0) { vkey = aNewValue } }
+    }
+    var inkMagenta: Int {
+        get { return vmagenta }
+        set (aNewValue) { if (aNewValue >= 0) { vmagenta = aNewValue } }
+    }
+    var paper: Int {
+        get { return vpaper }
+        set (aNewValue) { if (aNewValue >= 0) { vpaper = aNewValue } }
+    }
+    var oil: Int {
+            get { return voil }
+            set (aNewValue) { if (aNewValue >= 0) { voil = aNewValue } }
+    }
     
     init(name: String, priterColorState: UIColor, status: String, image: UIImage) {
         self.printerName = name
         self.printerGeneralState = priterColorState
         self.printerStatus = status
-        inkKey = 100
-        inkCyan = 100
-        inkYellow = 100
-        inkMagenta = 100
-        paper = 100
-        oil = 100
-        printerImage = image
+        self.printerImage = image
     }
 }
 
