@@ -9,6 +9,7 @@
 import UIKit
 
 class Printer: NSObject {
+    weak var delegate: EventHandlerDelegate?
     // Private fields
     private var voil = 100
     private var vpaper = 100
@@ -25,43 +26,49 @@ class Printer: NSObject {
     var inkCyan: Int {
         get { return vcyan }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { vcyan = aNewValue; stringCyan = String(vcyan) + " %" + " RESET" }
-            else if (aNewValue >= 0) { vcyan = aNewValue; stringCyan = String(vcyan)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { vcyan = aNewValue; stringCyan = String(vcyan) + " %" + " RESET" }
+            else if (aNewValue > 0) { vcyan = aNewValue; stringCyan = String(vcyan)+" %" }
+            else if (aNewValue == 0) { vcyan = aNewValue; stringCyan = String(vcyan) + " %" + " RESET"; criticalState() }
         }
     }
     var inkYellow: Int {
         get { return vyellow }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { vyellow = aNewValue; stringYellow = String(vyellow) + " %" + " RESET" }
-            else if (aNewValue >= 0) { vyellow = aNewValue; stringYellow = String(vyellow)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { vyellow = aNewValue; stringYellow = String(vyellow) + " %" + " RESET" }
+            else if (aNewValue > 0) { vyellow = aNewValue; stringYellow = String(vyellow)+" %" }
+            else if (aNewValue == 0) { vyellow = aNewValue; stringYellow = String(vyellow) + " %" + " RESET"; criticalState() }
         }
     }
     var inkKey: Int {
         get { return vkey }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { vkey = aNewValue; stringKey = String(vkey) + " %" + " RESET" }
-            else if (aNewValue >= 0) { vkey = aNewValue; stringKey = String(vkey)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { vkey = aNewValue; stringKey = String(vkey) + " %" + " RESET" }
+            else if (aNewValue > 0) { vkey = aNewValue; stringKey = String(vkey)+" %" }
+            else if (aNewValue == 0) { vkey = aNewValue;stringKey = String(vkey) + " %" + " RESET"; criticalState() }
         }
     }
     var inkMagenta: Int {
         get { return vmagenta }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { vmagenta = aNewValue; stringMagenta = String(vmagenta) + " %" + " RESET" }
-            else if (aNewValue >= 0) { vmagenta = aNewValue; stringMagenta = String(vmagenta)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { vmagenta = aNewValue; stringMagenta = String(vmagenta) + " %" + " RESET" }
+            else if (aNewValue > 0) { vmagenta = aNewValue; stringMagenta = String(vmagenta)+" %" }
+            else if (aNewValue == 0) { vmagenta = aNewValue; stringMagenta = String(vmagenta) + " %" + " RESET"; criticalState() }
         }
     }
     var paper: Int {
         get { return vpaper }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { vpaper = aNewValue; stringPaper = String(vpaper) + " %" + " RESET" }
-            else if (aNewValue >= 0) { vpaper = aNewValue; stringPaper = String(vpaper)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { vpaper = aNewValue; stringPaper = String(vpaper) + " %" + " RESET" }
+            else if (aNewValue > 0) { vpaper = aNewValue; stringPaper = String(vpaper)+" %" }
+            else if (aNewValue == 0) { vpaper = aNewValue; stringPaper = String(vpaper) + " %" + " RESET"; criticalState() }
         }
     }
     var oil: Int {
         get { return voil }
         set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue >= 0) { voil = aNewValue; stringOil = String(voil) + " %" + " RESET" }
-            else if (aNewValue >= 0) { voil = aNewValue; stringOil = String(voil)+" %" }
+            if (aNewValue <= 25 && aNewValue > 0) { voil = aNewValue; stringOil = String(voil) + " %" + " RESET" }
+            else if (aNewValue > 0) { voil = aNewValue; stringOil = String(voil)+" %" }
+            else if (aNewValue == 0) { voil = aNewValue; stringOil = String(voil) + " %" + " RESET"; criticalState() }
         }
     }
     // Properties Ints to String
@@ -78,5 +85,12 @@ class Printer: NSObject {
         self.printerStatus = status
         self.printerImage = image
     }
+    
+    private func criticalState() {
+        printerGeneralState = UIColor.red
+        printerStatus = "IDLE"
+        delegate?.changeState(sender: self)
+    }
+    
 }
 

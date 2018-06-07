@@ -8,7 +8,11 @@
 
 import UIKit
 
-class MasterViewController: UITableViewController {
+class MasterViewController: UITableViewController, EventHandlerDelegate {
+    func changeState(sender: Printer) {
+        tableView.reloadData()
+    }
+    
     var detailViewController: DetailViewController? = nil
     // hardcoded printers
     var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDLE", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDLE", image: UIImage(named: "printerC")!)]
@@ -27,7 +31,10 @@ class MasterViewController: UITableViewController {
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
         if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 2, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
+        }
+        for printer in printers {
+            printer.delegate = self
         }
     }
 
@@ -136,5 +143,6 @@ class MasterViewController: UITableViewController {
         printers[1].oil -= generateRandom()
         printers[2].oil -= generateRandom()
     }
+    
 }
 

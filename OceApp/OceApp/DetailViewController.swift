@@ -81,25 +81,38 @@ class DetailViewController: UIViewController {
     
     @objc func tapPaper(sender:UITapGestureRecognizer) {
         printer!.paper = 100
+        checkAll()
     }
     
     @objc func tapOil(sender:UITapGestureRecognizer) {
         printer!.oil = 100
+        checkAll()
     }
     
     @objc func tapCyan(sender:UITapGestureRecognizer) {
         printer!.inkCyan = 100
+        checkAll()
     }
     
     @objc func tapYellow(sender:UITapGestureRecognizer) {
         printer!.inkYellow = 100
+        checkAll()
     }
     
     @objc func tapKey(sender:UITapGestureRecognizer) {
         printer!.inkKey = 100
+        checkAll()
     }
     
     @objc func tapMagenta(sender:UITapGestureRecognizer) {
         printer!.inkMagenta = 100
+        checkAll()
+    }
+    
+    private func checkAll() {
+        if printer!.paper > 0 && printer!.oil > 0 && printer!.inkCyan > 0 && printer!.inkYellow > 0 && printer!.inkKey > 0 && printer!.inkMagenta > 0 {
+            printer!.printerGeneralState = UIColor.green
+            printer!.printerStatus = "ACTIVE"
+        }
     }
 }
