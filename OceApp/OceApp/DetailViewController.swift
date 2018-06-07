@@ -55,6 +55,8 @@ class DetailViewController: UIViewController {
         
         tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapMagenta))
         lMagenta.addGestureRecognizer(tap)
+        
+        setLabels()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,14 +73,10 @@ class DetailViewController: UIViewController {
     }
  
     @objc func updateLabels(sender:UITapGestureRecognizer) {
-        lCyan.text = printer?.stringCyan
-        lKey.text = printer?.stringKey
-        lOil.text = printer?.stringOil
-        lPaper.text = printer?.stringPaper
-        lYellow.text = printer?.stringYellow
-        lMagenta.text = printer?.stringMagenta
-        if printer?.printerStatus == PrinterStatus.IDLE {
+        setLabels()
+        if (printer?.printerStatus == PrinterStatus.IDLE) {
             timer!.invalidate()
+            setLabels()
         }
     }
     
@@ -113,11 +111,13 @@ class DetailViewController: UIViewController {
     }
     
     private func checkAll() {
-        if printer!.paper > 0 && printer!.oil > 0 && printer!.inkCyan > 0 && printer!.inkYellow > 0 && printer!.inkKey > 0 && printer!.inkMagenta > 0 {
+        if (printer!.paper > 0 && printer!.oil > 0 && printer!.inkCyan > 0 && printer!.inkYellow > 0 && printer!.inkKey > 0 && printer!.inkMagenta > 0) {
             printer!.printerGeneralState = UIColor.green
             printer!.printerStatus = PrinterStatus.ACTIVE
             checkTimerValidity()
             delegate?.startTimer(sender: printer!)
+        } else {
+            setLabels()
         }
     }
     
@@ -134,9 +134,20 @@ class DetailViewController: UIViewController {
         delegate?.startTimer(sender: printer!)
     }
     
-    func checkTimerValidity() {
+    private func checkTimerValidity() {
         if (timer?.isValid == false) {
-            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
+        }
+    }
+    
+    private func setLabels() {
+        if (printer != nil) {
+            lCyan.text = printer?.stringCyan
+            lKey.text = printer?.stringKey
+            lOil.text = printer?.stringOil
+            lPaper.text = printer?.stringPaper
+            lYellow.text = printer?.stringYellow
+            lMagenta.text = printer?.stringMagenta
         }
     }
 }

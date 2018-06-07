@@ -12,12 +12,12 @@ class Printer: NSObject {
     // delegate
     weak var delegate: EventHandlerDelegate?
     // Private fields
-    private var voil = 100
-    private var vpaper = 100
-    private var vcyan = 100
-    private var vmagenta = 100
-    private var vyellow = 100
-    private var vkey = 100
+    private var _oil = 100
+    private var _paper = 100
+    private var _cyan = 100
+    private var _magenta = 100
+    private var _yellow = 100
+    private var _key = 100
     // Public fields
     var printerImage: UIImage
     var printerName: String
@@ -25,51 +25,51 @@ class Printer: NSObject {
     var printerStatus: PrinterStatus
     // Properties Ints
     var inkCyan: Int {
-        get { return vcyan }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { vcyan = aNewValue; stringCyan = "Cyan Ink: " + String(vcyan) + "% RESET" }
-            else if (aNewValue > 0) { vcyan = aNewValue; stringCyan = "Cyan Ink: " + String(vcyan) + " %" }
-            else if (aNewValue == 0) { vcyan = aNewValue; stringCyan = "Cyan Ink: " + String(vcyan) + " % RESET"; criticalState() }
+        get { return _cyan }
+        set (value) {
+            if (value <= 25 && value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + "% RESET" }
+            else if (value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + " %" }
+            else if (value <= 0) { _cyan = 0; stringCyan = "Cyan Ink: " + String(_cyan) + " % RESET"; criticalState() }
         }
     }
     var inkYellow: Int {
-        get { return vyellow }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { vyellow = aNewValue; stringYellow = "Yellow Ink: " + String(vyellow) + " % RESET" }
-            else if (aNewValue > 0) { vyellow = aNewValue; stringYellow = "Yellow Ink: " + String(vyellow)+" %" }
-            else if (aNewValue == 0) { vyellow = aNewValue; stringYellow = "Yellow Ink: " + String(vyellow) + " % RESET"; criticalState() }
+        get { return _yellow }
+        set (value) {
+            if (value <= 25 && value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET" }
+            else if (value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " %" }
+            else if (value <= 0) { _yellow = 0; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET"; criticalState() }
         }
     }
     var inkKey: Int {
-        get { return vkey }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { vkey = aNewValue; stringKey = "Key Ink: " + String(vkey) + " % RESET" }
-            else if (aNewValue > 0) { vkey = aNewValue; stringKey = "Key Ink: " + String(vkey)+" %" }
-            else if (aNewValue == 0) { vkey = aNewValue;stringKey = "Key Ink: " + String(vkey) + " % RESET"; criticalState() }
+        get { return _key }
+        set (value) {
+            if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET" }
+            else if (value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " %" }
+            else if (value <= 0) { _key = 0; stringKey = "Key Ink: " + String(_key) + " % RESET"; criticalState() }
         }
     }
     var inkMagenta: Int {
-        get { return vmagenta }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { vmagenta = aNewValue; stringMagenta = "Magenta Ink: " + String(vmagenta) + " % RESET" }
-            else if (aNewValue > 0) { vmagenta = aNewValue; stringMagenta = "Magenta Ink: " + String(vmagenta)+" %" }
-            else if (aNewValue == 0) { vmagenta = aNewValue; stringMagenta = "Magenta Ink: " + String(vmagenta) + " % RESET"; criticalState() }
+        get { return _magenta }
+        set (value) {
+            if (value <= 25 && value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET" }
+            else if (value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " %" }
+            else if (value <= 0) { _magenta = 0; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET"; criticalState() }
         }
     }
     var paper: Int {
-        get { return vpaper }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { vpaper = aNewValue; stringPaper = "Paper: " + String(vpaper) + " % RESET" }
-            else if (aNewValue > 0) { vpaper = aNewValue; stringPaper = "Paper: " + String(vpaper)+" %" }
-            else if (aNewValue == 0) { vpaper = aNewValue; stringPaper = "Paper: " + String(vpaper) + " % RESET"; criticalState() }
+        get { return _paper }
+        set (value) {
+            if (value <= 25 && value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " % RESET" }
+            else if (value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " %" }
+            else if (value <= 0) { _paper = 0; stringPaper = "Paper: " + String(_paper) + " % RESET"; criticalState() }
         }
     }
     var oil: Int {
-        get { return voil }
-        set (aNewValue) {
-            if (aNewValue <= 25 && aNewValue > 0) { voil = aNewValue; stringOil = "Oil: " + String(voil) + " % RESET"}
-            else if (aNewValue > 0) { voil = aNewValue; stringOil = "Oil: " + String(voil)+" %" }
-            else if (aNewValue == 0) { voil = aNewValue; stringOil = "Oil: " + String(voil) + " % RESET"; criticalState() }
+        get { return _oil }
+        set (value) {
+            if (value <= 25 && value > 0) { _oil = value; stringOil = "Oil: " + String(_oil) + " % RESET"}
+            else if (value > 0) { _oil = value; stringOil = "Oil: " + String(_oil) + " %" }
+            else if (value <= 0) { _oil = 0; stringOil = "Oil: " + String(_oil) + " % RESET"; criticalState() }
         }
     }
     // Properties Ints to String
@@ -92,6 +92,5 @@ class Printer: NSObject {
         printerStatus = PrinterStatus.IDLE
         delegate?.changeState(sender: self)
     }
-    
 }
 
