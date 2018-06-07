@@ -9,15 +9,37 @@
 import UIKit
 
 class MasterViewController: UITableViewController, EventHandlerDelegate {
+    func startTimer(sender: Printer) {
+        switch sender.printerName {
+        case "Printer A":
+            timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
+        case "Printer B":
+            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+        default:
+            timer3? = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+        }
+        tableView.reloadData()
+    }
+    
     func changeState(sender: Printer) {
+        switch sender.printerName {
+        case "Printer A":
+            timer1?.invalidate()
+        case "Printer B":
+            timer2?.invalidate()
+        default:
+            timer3?.invalidate()
+        }
         tableView.reloadData()
     }
     
     var detailViewController: DetailViewController? = nil
     // hardcoded printers
-    var printers = [Printer(name: "Printer A", priterColorState: UIColor.gray, status: "IDLE", image: UIImage(named: "printerA")!),Printer(name: "Printer B", priterColorState: UIColor.green, status: "ACTIVE", image: UIImage(named: "printerB")!),Printer(name: "Printer C", priterColorState: UIColor.red, status: "IDLE", image: UIImage(named: "printerC")!)]
+    var printers = [Printer(name: "Printer A", image: UIImage(named: "printerA")!),Printer(name: "Printer B", image: UIImage(named: "printerB")!),Printer(name: "Printer C", image: UIImage(named: "printerC")!)]
 
-    var timer: Timer?
+    var timer1: Timer?
+    var timer2: Timer?
+    var timer3: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +52,15 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
             let controllers = split.viewControllers
             detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
-        if timer == nil {
-            timer = Timer.scheduledTimer(timeInterval: 0.4, target: self, selector: #selector(MasterViewController.timerPrinter), userInfo: nil, repeats: true)
+        if timer1 == nil && timer2 == nil && timer3 == nil {
+            timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
+            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
         for printer in printers {
             printer.delegate = self
         }
+        //detailViewController?.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -50,9 +75,18 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
 
     @objc
     func insertNewObject(_ sender: Any) {
-        printers.insert(Printer(name: "New Printer", priterColorState: UIColor.gray, status: "IDLE", image: UIImage(named: "horizontalLine")!), at: 0)
-        let indexPath = IndexPath(row: 0, section: 0)
-        tableView.insertRows(at: [indexPath], with: .automatic)
+        for printer in printers {
+            printer.inkCyan = 100
+            printer.inkKey = 100
+            printer.inkYellow = 100
+            printer.inkMagenta = 100
+            printer.oil = 100
+            printer.paper = 100
+            printer.printerStatus = PrinterStatus.ACTIVE
+            printer.printerGeneralState = UIColor.green
+            startTimer(sender: printer)
+        }
+        tableView.reloadData()
     }
 
     // MARK: - Segues
@@ -66,6 +100,7 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
                 controller.printer = printer
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.delegate = self
             }
         }
     }
@@ -87,7 +122,7 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
         let printer = printers[indexPath.row]
         // Setting labels and imageView with background color also making it round
         cell.printerNameLabel.text = printer.printerName
-        cell.printerStateLabel.text = printer.printerStatus
+        cell.printerStateLabel.text = printer.printerStatus.rawValue
         cell.printerStatusImgView.layer.borderWidth = 1.5
         cell.printerStatusImgView.layer.masksToBounds = false
         cell.printerStatusImgView.layer.borderColor = UIColor.black.cgColor
@@ -117,32 +152,31 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
     }
     
     // Timer decreases the values of the printers properties
-    @objc func timerPrinter() {
-        // Cyan Ink
+    @objc func timerPrinter1() {
         printers[0].inkCyan -= generateRandom()
-        printers[1].inkCyan -= generateRandom()
-        printers[2].inkCyan -= generateRandom()
-        // Magenta
-        printers[0].inkMagenta -= generateRandom()
-        printers[1].inkMagenta -= generateRandom()
-        printers[2].inkMagenta -= generateRandom()
-        // Key
         printers[0].inkKey -= generateRandom()
-        printers[1].inkKey -= generateRandom()
-        printers[2].inkKey -= generateRandom()
-        // Yellow
         printers[0].inkYellow -= generateRandom()
-        printers[1].inkYellow -= generateRandom()
-        printers[2].inkYellow -= generateRandom()
-        // paper
+        printers[0].inkMagenta -= generateRandom()
         printers[0].paper -= generateRandom()
-        printers[1].paper -= generateRandom()
-        printers[2].paper -= generateRandom()
-        // oil
         printers[0].oil -= generateRandom()
-        printers[1].oil -= generateRandom()
-        printers[2].oil -= generateRandom()
     }
     
+    @objc func timerPrinter2() {
+        printers[1].inkCyan -= generateRandom()
+        printers[1].inkKey -= generateRandom()
+        printers[1].inkYellow -= generateRandom()
+        printers[1].inkMagenta -= generateRandom()
+        printers[1].paper -= generateRandom()
+        printers[1].oil -= generateRandom()
+    }
+    
+    @objc func timerPrinter3() {
+        printers[2].inkCyan -= generateRandom()
+        printers[2].inkKey -= generateRandom()
+        printers[2].inkYellow -= generateRandom()
+        printers[2].inkMagenta -= generateRandom()
+        printers[2].paper -= generateRandom()
+        printers[2].oil -= generateRandom()
+    }
 }
 

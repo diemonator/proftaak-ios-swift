@@ -16,6 +16,7 @@
 		836CD36C20BFF345000E61C8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 836CD36A20BFF345000E61C8 /* Main.storyboard */; };
 		836CD36E20BFF346000E61C8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 836CD36D20BFF346000E61C8 /* Assets.xcassets */; };
 		836CD37120BFF346000E61C8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 836CD36F20BFF346000E61C8 /* LaunchScreen.storyboard */; };
+		83DDC15420C97DD50018E641 /* PrinterStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 83DDC15320C97DD50018E641 /* PrinterStatus.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		836CD36D20BFF346000E61C8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		836CD37020BFF346000E61C8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		836CD37220BFF346000E61C8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		83DDC15320C97DD50018E641 /* PrinterStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrinterStatus.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 				836CD36D20BFF346000E61C8 /* Assets.xcassets */,
 				836CD36F20BFF346000E61C8 /* LaunchScreen.storyboard */,
 				836CD37220BFF346000E61C8 /* Info.plist */,
+				83DDC15320C97DD50018E641 /* PrinterStatus.swift */,
 			);
 			path = OceApp;
 			sourceTree = "<group>";
@@ -149,6 +152,7 @@
 			files = (
 				83309E9320BFF5B90037B036 /* Printer.swift in Sources */,
 				8337517820C9572200E6C5D9 /* EventHandlerDelegate.swift in Sources */,
+				83DDC15420C97DD50018E641 /* PrinterStatus.swift in Sources */,
 				83309E9520C002D70037B036 /* CustomeTableCell.swift in Sources */,
 				836CD36920BFF345000E61C8 /* DetailViewController.swift in Sources */,
 				836CD36720BFF345000E61C8 /* MasterViewController.swift in Sources */,

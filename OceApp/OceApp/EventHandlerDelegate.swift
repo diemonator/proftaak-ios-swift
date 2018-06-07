@@ -10,4 +10,5 @@ import UIKit
 
 protocol EventHandlerDelegate : NSObjectProtocol {
     func changeState(sender: Printer)
+    func startTimer(sender: Printer)
 }

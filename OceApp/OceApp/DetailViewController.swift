@@ -9,6 +9,8 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    // delegate
+    weak var delegate: EventHandlerDelegate?
     
     @IBOutlet var lCyan: UILabel!
     @IBOutlet var lYellow: UILabel!
@@ -64,9 +66,7 @@ class DetailViewController: UIViewController {
         didSet {
             // Update the view.
             configureView()
-            if timer == nil {
-                timer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
-            }
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
         }
     }
  
@@ -77,6 +77,9 @@ class DetailViewController: UIViewController {
         lPaper.text = printer?.stringPaper
         lYellow.text = printer?.stringYellow
         lMagenta.text = printer?.stringMagenta
+        if printer?.printerStatus == PrinterStatus.IDLE {
+            timer!.invalidate()
+        }
     }
     
     @objc func tapPaper(sender:UITapGestureRecognizer) {
@@ -112,7 +115,28 @@ class DetailViewController: UIViewController {
     private func checkAll() {
         if printer!.paper > 0 && printer!.oil > 0 && printer!.inkCyan > 0 && printer!.inkYellow > 0 && printer!.inkKey > 0 && printer!.inkMagenta > 0 {
             printer!.printerGeneralState = UIColor.green
-            printer!.printerStatus = "ACTIVE"
+            printer!.printerStatus = PrinterStatus.ACTIVE
+            checkTimerValidity()
+            delegate?.startTimer(sender: printer!)
+        }
+    }
+    
+    @IBAction func btnReset(_ sender: UIButton) {
+        printer!.printerGeneralState = UIColor.green
+        printer!.printerStatus = PrinterStatus.ACTIVE
+        printer!.inkCyan = 100
+        printer!.inkKey = 100
+        printer!.inkMagenta = 100
+        printer!.inkYellow = 100
+        printer!.paper = 100
+        printer!.oil = 100
+        checkTimerValidity()
+        delegate?.startTimer(sender: printer!)
+    }
+    
+    func checkTimerValidity() {
+        if (timer?.isValid == false) {
+            timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(DetailViewController.updateLabels), userInfo: nil, repeats: true)
         }
     }
 }
