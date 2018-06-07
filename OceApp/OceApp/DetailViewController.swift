@@ -19,7 +19,6 @@ class DetailViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
 
-    
     var timer: Timer?
     
     func configureView() {
@@ -37,6 +36,23 @@ class DetailViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         configureView()
+        var tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapPaper))
+        lPaper.addGestureRecognizer(tap)
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapOil))
+        lOil.addGestureRecognizer(tap)
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapCyan))
+        lCyan.addGestureRecognizer(tap)
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapKey))
+        lKey.addGestureRecognizer(tap)
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapYellow))
+        lYellow.addGestureRecognizer(tap)
+        
+        tap = UITapGestureRecognizer(target: self, action: #selector(DetailViewController.tapMagenta))
+        lMagenta.addGestureRecognizer(tap)
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,13 +70,36 @@ class DetailViewController: UIViewController {
         }
     }
  
-    @objc func updateLabels() {
-        let char = " %"
-        lCyan.text = String(printer!.inkCyan) + char
-        lKey.text = String(printer!.inkKey) + char
-        lOil.text = String(printer!.oil) + char
-        lPaper.text = String(printer!.paper) + char
-        lYellow.text = String(printer!.inkYellow) + char
-        lMagenta.text = String(printer!.inkMagenta) + char
+    @objc func updateLabels(sender:UITapGestureRecognizer) {
+        lCyan.text = printer?.stringCyan
+        lKey.text = printer?.stringKey
+        lOil.text = printer?.stringOil
+        lPaper.text = printer?.stringPaper
+        lYellow.text = printer?.stringYellow
+        lMagenta.text = printer?.stringMagenta
+    }
+    
+    @objc func tapPaper(sender:UITapGestureRecognizer) {
+        printer!.paper = 100
+    }
+    
+    @objc func tapOil(sender:UITapGestureRecognizer) {
+        printer!.oil = 100
+    }
+    
+    @objc func tapCyan(sender:UITapGestureRecognizer) {
+        printer!.inkCyan = 100
+    }
+    
+    @objc func tapYellow(sender:UITapGestureRecognizer) {
+        printer!.inkYellow = 100
+    }
+    
+    @objc func tapKey(sender:UITapGestureRecognizer) {
+        printer!.inkKey = 100
+    }
+    
+    @objc func tapMagenta(sender:UITapGestureRecognizer) {
+        printer!.inkMagenta = 100
     }
 }
