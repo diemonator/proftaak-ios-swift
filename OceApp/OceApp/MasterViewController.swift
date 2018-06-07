@@ -104,32 +104,36 @@ class MasterViewController: UITableViewController {
         }
     }
     
+    func generateRandom() -> Int {
+        return Int(arc4random_uniform(4))
+    }
+    
     // Timer decreases the values of the printers properties
     @objc func timerPrinter() {
         // Cyan Ink
-        printers[0].inkCyan -= 1
-        printers[1].inkCyan -= 2
-        printers[2].inkCyan -= 3
+        printers[0].inkCyan -= generateRandom()
+        printers[1].inkCyan -= generateRandom()
+        printers[2].inkCyan -= generateRandom()
         // Magenta
-        printers[0].inkMagenta -= 3
-        printers[1].inkMagenta -= 2
-        printers[2].inkMagenta -= 1
+        printers[0].inkMagenta -= generateRandom()
+        printers[1].inkMagenta -= generateRandom()
+        printers[2].inkMagenta -= generateRandom()
         // Key
-        printers[0].inkKey -= 2
-        printers[1].inkKey -= 1
-        printers[2].inkKey -= 3
+        printers[0].inkKey -= generateRandom()
+        printers[1].inkKey -= generateRandom()
+        printers[2].inkKey -= generateRandom()
         // Yellow
-        printers[0].inkYellow -= 4
-        printers[1].inkYellow -= 3
-        printers[2].inkYellow -= 2
+        printers[0].inkYellow -= generateRandom()
+        printers[1].inkYellow -= generateRandom()
+        printers[2].inkYellow -= generateRandom()
         // paper
-        printers[0].paper -= 1
-        printers[1].paper -= 1
-        printers[2].paper -= 1
+        printers[0].paper -= generateRandom()
+        printers[1].paper -= generateRandom()
+        printers[2].paper -= generateRandom()
         // oil
-        printers[0].oil -= 1
-        printers[1].oil -= 2
-        printers[2].oil -= 3
+        printers[0].oil -= generateRandom()
+        printers[1].oil -= generateRandom()
+        printers[2].oil -= generateRandom()
     }
 }
 
