@@ -70,11 +70,11 @@
 				836CD36620BFF345000E61C8 /* MasterViewController.swift */,
 				836CD36820BFF345000E61C8 /* DetailViewController.swift */,
 				8337517720C9572200E6C5D9 /* EventHandlerDelegate.swift */,
+				83DDC15320C97DD50018E641 /* PrinterStatus.swift */,
 				836CD36A20BFF345000E61C8 /* Main.storyboard */,
 				836CD36D20BFF346000E61C8 /* Assets.xcassets */,
 				836CD36F20BFF346000E61C8 /* LaunchScreen.storyboard */,
 				836CD37220BFF346000E61C8 /* Info.plist */,
-				83DDC15320C97DD50018E641 /* PrinterStatus.swift */,
 			);
 			path = OceApp;
 			sourceTree = "<group>";
