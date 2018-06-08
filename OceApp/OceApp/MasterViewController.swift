@@ -20,8 +20,6 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let value = UIInterfaceOrientation.landscapeLeft.rawValue
-        UIDevice.current.setValue(value, forKey: "orientation")
         // Do any additional setup after loading the view, typically from a nib.
 
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(insertNewObject(_:)))
@@ -40,14 +38,7 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
             timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
             timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
-    }
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        return .landscape
-    }
-    
-    override var shouldAutorotate: Bool {
-        return true
+        self.performSegue(withIdentifier: "showDetail", sender: self)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -88,6 +79,13 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
                 controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
                 controller.navigationItem.leftItemsSupplementBackButton = true
                 controller.delegate = self
+            } else {
+                let printer = printers[0]
+                let controller = (segue.destination as! UINavigationController).topViewController as! DetailViewController
+                controller.printer = printer
+                controller.navigationItem.leftBarButtonItem = splitViewController?.displayModeButtonItem
+                controller.navigationItem.leftItemsSupplementBackButton = true
+                controller.delegate = self
             }
         }
     }
@@ -122,15 +120,6 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         // Return false if you do not want the specified item to be editable.
         return true
-    }
-
-    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            printers.remove(at: indexPath.row)
-            tableView.deleteRows(at: [indexPath], with: .fade)
-        } else if editingStyle == .insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view.
-        }
     }
     
     // Random from 0 to 3
