@@ -162,7 +162,7 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
         } else if (sender.printerName == "Printer B") {
             timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
         } else if (sender.printerName == "Printer C") {
-            timer3? = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
         tableView.reloadData()
     }
