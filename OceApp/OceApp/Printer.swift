@@ -28,6 +28,7 @@ class Printer: NSObject {
         get { return _cyan }
         set (value) {
             if (value <= 25 && value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + "% RESET" }
+            else if (value == 50) { }
             else if (value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + " %" }
             else if (value <= 0) { _cyan = 0; stringCyan = "Cyan Ink: " + String(_cyan) + " % RESET"; criticalState() }
         }
@@ -36,6 +37,7 @@ class Printer: NSObject {
         get { return _yellow }
         set (value) {
             if (value <= 25 && value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET" }
+            else if (value == 50) { }
             else if (value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " %" }
             else if (value <= 0) { _yellow = 0; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET"; criticalState() }
         }
@@ -44,6 +46,7 @@ class Printer: NSObject {
         get { return _key }
         set (value) {
             if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET"; KeyInkLamp() }
+            else if (value == 50) { }
             else if (value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " %" }
             else if (value <= 0) { _key = 0; stringKey = "Key Ink: " + String(_key) + " % RESET"; criticalState() }
         }
@@ -52,6 +55,7 @@ class Printer: NSObject {
         get { return _magenta }
         set (value) {
             if (value <= 25 && value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET" }
+            else if (value == 50) { }
             else if (value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " %" }
             else if (value <= 0) { _magenta = 0; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET"; criticalState() }
         }
@@ -60,6 +64,7 @@ class Printer: NSObject {
         get { return _paper }
         set (value) {
             if (value <= 25 && value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " % RESET" }
+            else if (value == 50) { YellowLamp() }
             else if (value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " %" }
             else if (value <= 0) { _paper = 0; stringPaper = "Paper: " + String(_paper) + " % RESET"; criticalState() }
         }
@@ -95,13 +100,13 @@ class Printer: NSObject {
     
     private func YellowLamp()
     {
-        let urll:String = "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state"
-        let url = URL(string: urll)
-        var UrlRequest = URLRequest(url: url!)
-        UrlRequest.httpMethod = "PUT"
+        //URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")!)
         
+        UrlRequest.httpMethod = "PUT"
         UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
         UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        
         let jsonDictonary = NSMutableDictionary()
         jsonDictonary.setValue(true, forKey: "on")
         jsonDictonary.setValue(200, forKey: "sat")
@@ -109,13 +114,10 @@ class Printer: NSObject {
         jsonDictonary.setValue(20000, forKey: "hue")
         
         let jsonData:Data
-        do{
-            
+        do {
             jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
             UrlRequest.httpBody = jsonData
-        }
-        catch{
-            
+        } catch {
             print("Error in jsonnnn")
             return
         }
@@ -123,31 +125,28 @@ class Printer: NSObject {
         //     let session = URLSession(configuration: config)
         let session = URLSession.shared
         session.dataTask(with: UrlRequest) { (data, response, error) in
-            if let response = response{
+            if let response = response {
                 print(response)
             }
-            if let data = data{
-                do{
+            if let data = data {
+                do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print(json)
-                }catch{
+                } catch {
                     print(error)
                 }
             }
             }.resume()
-        
-        
-        
     }
+    
     private func PaperLamp()
     {
-        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
-        let url = URL(string: urll)
-        var UrlRequest = URLRequest(url: url!)
-        UrlRequest.httpMethod = "PUT"
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")!)
         
+        UrlRequest.httpMethod = "PUT"
         UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
         UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
+        
         let jsonDictonary = NSMutableDictionary()
         jsonDictonary.setValue(true, forKey: "on")
         jsonDictonary.setValue(200, forKey: "sat")
@@ -155,13 +154,10 @@ class Printer: NSObject {
         jsonDictonary.setValue(40000, forKey: "hue")
         
         let jsonData:Data
-        do{
-            
+        do {
             jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
             UrlRequest.httpBody = jsonData
-        }
-        catch{
-            
+        } catch {
             print("Error in jsonnnn")
             return
         }
@@ -172,26 +168,25 @@ class Printer: NSObject {
             if let response = response{
                 print(response)
             }
-            if let data = data{
-                do{
+            if let data = data {
+                do {
                     let json = try JSONSerialization.jsonObject(with: data, options: [])
                     print(json)
-                }catch{
+                } catch {
                     print(error)
                 }
             }
-            }.resume()
+        }.resume()
     }
     
     private func KeyInkLamp()
     {
-        let urll:String = "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/1/state"
-        let url = URL(string: urll)
-        var UrlRequest = URLRequest(url: url!)
-        UrlRequest.httpMethod = "PUT"
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")!)
         
+        UrlRequest.httpMethod = "PUT"
         UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
         UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        
         DispatchQueue.global(qos: .background).async {
             repeat {
                 var jsonDictonary = NSMutableDictionary()
@@ -201,13 +196,12 @@ class Printer: NSObject {
                 jsonDictonary.setValue(10000, forKey: "hue")
                 
                 var jsonData:Data
-                do{
+                do {
                     
                     jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
                     UrlRequest.httpBody = jsonData
                 }
-                catch{
-                    
+                catch {
                     print("Error in jsonnnn")
                     return
                 }
@@ -215,10 +209,10 @@ class Printer: NSObject {
                 //     let session = URLSession(configuration: config)
                 var session = URLSession.shared
                 session.dataTask(with: UrlRequest) { (data, response, error) in
-                    if let response = response{
+                    if let response = response {
                         print(response)
                     }
-                    if let data = data{
+                    if let data = data {
                         do{
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             print(json)
@@ -226,7 +220,7 @@ class Printer: NSObject {
                             print(error)
                         }
                     }
-                    }.resume()
+                }.resume()
                 
                 sleep(15)
                 
@@ -234,11 +228,11 @@ class Printer: NSObject {
                 
                 jsonDictonary.setValue(false, forKey: "on")
                 
-                do{
+                do {
                     jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
                     UrlRequest.httpBody = jsonData
                 }
-                catch{
+                catch {
                     
                     print("Error in jsonnnn")
                     return
@@ -247,18 +241,18 @@ class Printer: NSObject {
                 //     let session = URLSession(configuration: config)
                 session = URLSession.shared
                 session.dataTask(with: UrlRequest) { (data, response, error) in
-                    if let response = response{
+                    if let response = response {
                         print(response)
                     }
-                    if let data = data{
-                        do{
+                    if let data = data {
+                        do {
                             let json = try JSONSerialization.jsonObject(with: data, options: [])
                             print(json)
-                        }catch{
+                        } catch {
                             print(error)
                         }
                     }
-                    }.resume()
+                }.resume()
             } while (true)
         }
     }

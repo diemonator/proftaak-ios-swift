@@ -15,8 +15,8 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
     private var printers = [Printer(name: "Printer A", image: UIImage(named: "printerA")!),Printer(name: "Printer B", image: UIImage(named: "printerB")!),Printer(name: "Printer C", image: UIImage(named: "printerC")!)]
     // Separete Timer for every printer
     private var timer1: Timer?
-    private var timer2: Timer?
-    private var timer3: Timer?
+//    private var timer2: Timer?
+//    private var timer3: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,10 +33,10 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
             printer.delegate = self
         }
         // Initiate timers
-        if (timer1 == nil && timer2 == nil && timer3 == nil) {
+        if (timer1 == nil /*&& timer2 == nil && timer3 == nil*/) {
             timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
-            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
-            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+//            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+//            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
         self.performSegue(withIdentifier: "showDetail", sender: self)
     }
@@ -137,44 +137,46 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
         printers[0].oil -= generateRandom()
     }
     
-    @objc func timerPrinter2() {
-        printers[1].inkCyan -= generateRandom()
-        printers[1].inkKey -= generateRandom()
-        printers[1].inkYellow -= generateRandom()
-        printers[1].inkMagenta -= generateRandom()
-        printers[1].paper -= generateRandom()
-        printers[1].oil -= generateRandom()
-    }
-    
-    @objc func timerPrinter3() {
-        printers[2].inkCyan -= generateRandom()
-        printers[2].inkKey -= generateRandom()
-        printers[2].inkYellow -= generateRandom()
-        printers[2].inkMagenta -= generateRandom()
-        printers[2].paper -= generateRandom()
-        printers[2].oil -= generateRandom()
-    }
+//    @objc func timerPrinter2() {
+//        printers[1].inkCyan -= generateRandom()
+//        printers[1].inkKey -= generateRandom()
+//        printers[1].inkYellow -= generateRandom()
+//        printers[1].inkMagenta -= generateRandom()
+//        printers[1].paper -= generateRandom()
+//        printers[1].oil -= generateRandom()
+//    }
+//    
+//    @objc func timerPrinter3() {
+//        printers[2].inkCyan -= generateRandom()
+//        printers[2].inkKey -= generateRandom()
+//        printers[2].inkYellow -= generateRandom()
+//        printers[2].inkMagenta -= generateRandom()
+//        printers[2].paper -= generateRandom()
+//        printers[2].oil -= generateRandom()
+//    }
     
     // Protocol methods
     func startTimer(sender: Printer) {
         if (sender.printerName == "Printer A")  {
             timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
-        } else if (sender.printerName == "Printer B") {
-            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
-        } else if (sender.printerName == "Printer C") {
-            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
+//            else if (sender.printerName == "Printer B") {
+//            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+//        } else if (sender.printerName == "Printer C") {
+//            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+//        }
         tableView.reloadData()
     }
     
     func changeState(sender: Printer) {
         if (sender.printerName == "Printer A")  {
             timer1?.invalidate()
-        } else if (sender.printerName == "Printer B") {
-            timer2?.invalidate()
-        } else if (sender.printerName == "Printer C") {
-            timer3?.invalidate()
         }
+//        else if (sender.printerName == "Printer B") {
+//            timer2?.invalidate()
+//        } else if (sender.printerName == "Printer C") {
+//            timer3?.invalidate()
+//        }
         tableView.reloadData()
     }
 }
