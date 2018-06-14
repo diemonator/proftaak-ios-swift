@@ -43,7 +43,7 @@ class Printer: NSObject {
     var inkKey: Int {
         get { return _key }
         set (value) {
-            if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET" }
+            if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET"; KeyInkLamp() }
             else if (value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " %" }
             else if (value <= 0) { _key = 0; stringKey = "Key Ink: " + String(_key) + " % RESET"; criticalState() }
         }
@@ -95,13 +95,13 @@ class Printer: NSObject {
     
     private func YellowLamp()
     {
-        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
+        let urll:String = "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state"
         let url = URL(string: urll)
         var UrlRequest = URLRequest(url: url!)
         UrlRequest.httpMethod = "PUT"
         
         UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
-        UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
+        UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
         let jsonDictonary = NSMutableDictionary()
         jsonDictonary.setValue(true, forKey: "on")
         jsonDictonary.setValue(200, forKey: "sat")
@@ -181,55 +181,86 @@ class Printer: NSObject {
                 }
             }
             }.resume()
-        
-        
-        
     }
+    
     private func KeyInkLamp()
     {
-        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
+        let urll:String = "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/1/state"
         let url = URL(string: urll)
         var UrlRequest = URLRequest(url: url!)
         UrlRequest.httpMethod = "PUT"
         
         UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
-        UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
-        let jsonDictonary = NSMutableDictionary()
-        jsonDictonary.setValue(true, forKey: "on")
-        jsonDictonary.setValue(200, forKey: "sat")
-        jsonDictonary.setValue(200, forKey: "bri")
-        jsonDictonary.setValue(10000, forKey: "hue")
-        
-        let jsonData:Data
-        do{
-            
-            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
-            UrlRequest.httpBody = jsonData
-        }
-        catch{
-            
-            print("Error in jsonnnn")
-            return
-        }
-        //     let config = URLSessionConfiguration.default
-        //     let session = URLSession(configuration: config)
-        let session = URLSession.shared
-        session.dataTask(with: UrlRequest) { (data, response, error) in
-            if let response = response{
-                print(response)
-            }
-            if let data = data{
+        UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        DispatchQueue.global(qos: .background).async {
+            repeat {
+                var jsonDictonary = NSMutableDictionary()
+                jsonDictonary.setValue(true, forKey: "on")
+                jsonDictonary.setValue(200, forKey: "sat")
+                jsonDictonary.setValue(200, forKey: "bri")
+                jsonDictonary.setValue(10000, forKey: "hue")
+                
+                var jsonData:Data
                 do{
-                    let json = try JSONSerialization.jsonObject(with: data, options: [])
-                    print(json)
-                }catch{
-                    print(error)
+                    
+                    jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+                    UrlRequest.httpBody = jsonData
                 }
-            }
-            }.resume()
-        
-        
-        
+                catch{
+                    
+                    print("Error in jsonnnn")
+                    return
+                }
+                //     let config = URLSessionConfiguration.default
+                //     let session = URLSession(configuration: config)
+                var session = URLSession.shared
+                session.dataTask(with: UrlRequest) { (data, response, error) in
+                    if let response = response{
+                        print(response)
+                    }
+                    if let data = data{
+                        do{
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            print(json)
+                        }catch{
+                            print(error)
+                        }
+                    }
+                    }.resume()
+                
+                sleep(15)
+                
+                jsonDictonary = NSMutableDictionary()
+                
+                jsonDictonary.setValue(false, forKey: "on")
+                
+                do{
+                    jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+                    UrlRequest.httpBody = jsonData
+                }
+                catch{
+                    
+                    print("Error in jsonnnn")
+                    return
+                }
+                //     let config = URLSessionConfiguration.default
+                //     let session = URLSession(configuration: config)
+                session = URLSession.shared
+                session.dataTask(with: UrlRequest) { (data, response, error) in
+                    if let response = response{
+                        print(response)
+                    }
+                    if let data = data{
+                        do{
+                            let json = try JSONSerialization.jsonObject(with: data, options: [])
+                            print(json)
+                        }catch{
+                            print(error)
+                        }
+                    }
+                    }.resume()
+            } while (true)
+        }
     }
 }
 
