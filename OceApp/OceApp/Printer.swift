@@ -92,5 +92,144 @@ class Printer: NSObject {
         printerStatus = PrinterStatus.IDLE
         delegate?.changeState(sender: self)
     }
+    
+    private func YellowLamp()
+    {
+        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
+        let url = URL(string: urll)
+        var UrlRequest = URLRequest(url: url!)
+        UrlRequest.httpMethod = "PUT"
+        
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(200, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(20000, forKey: "hue")
+        
+        let jsonData:Data
+        do{
+            
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        }
+        catch{
+            
+            print("Error in jsonnnn")
+            return
+        }
+        //     let config = URLSessionConfiguration.default
+        //     let session = URLSession(configuration: config)
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response{
+                print(response)
+            }
+            if let data = data{
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                }catch{
+                    print(error)
+                }
+            }
+            }.resume()
+        
+        
+        
+    }
+    private func PaperLamp()
+    {
+        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
+        let url = URL(string: urll)
+        var UrlRequest = URLRequest(url: url!)
+        UrlRequest.httpMethod = "PUT"
+        
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(200, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(40000, forKey: "hue")
+        
+        let jsonData:Data
+        do{
+            
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        }
+        catch{
+            
+            print("Error in jsonnnn")
+            return
+        }
+        //     let config = URLSessionConfiguration.default
+        //     let session = URLSession(configuration: config)
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response{
+                print(response)
+            }
+            if let data = data{
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                }catch{
+                    print(error)
+                }
+            }
+            }.resume()
+        
+        
+        
+    }
+    private func KeyInkLamp()
+    {
+        let urll:String = "http://192.168.0.100/api/Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU/lights/1/state"
+        let url = URL(string: urll)
+        var UrlRequest = URLRequest(url: url!)
+        UrlRequest.httpMethod = "PUT"
+        
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("Np5RIr7cInbJPL9JLoeRDxQdh-nRi1v2IBGURFvU", forHTTPHeaderField: "Authorization Bearer ")
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(200, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(10000, forKey: "hue")
+        
+        let jsonData:Data
+        do{
+            
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        }
+        catch{
+            
+            print("Error in jsonnnn")
+            return
+        }
+        //     let config = URLSessionConfiguration.default
+        //     let session = URLSession(configuration: config)
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response{
+                print(response)
+            }
+            if let data = data{
+                do{
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                }catch{
+                    print(error)
+                }
+            }
+            }.resume()
+        
+        
+        
+    }
 }
 
