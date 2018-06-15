@@ -15,9 +15,11 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
     private var printers = [Printer(name: "Printer A", image: UIImage(named: "printerA")!),Printer(name: "Printer B", image: UIImage(named: "printerB")!),Printer(name: "Printer C", image: UIImage(named: "printerC")!)]
     // Separete Timer for every printer
     private var timer1: Timer?
-//    private var timer2: Timer?
-//    private var timer3: Timer?
-
+    private var timer2: Timer?
+    private var timer3: Timer?
+    private var checkedCyan = false
+    private var checkedMageta = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -33,12 +35,13 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
             printer.delegate = self
         }
         // Initiate timers
-        if (timer1 == nil /*&& timer2 == nil && timer3 == nil*/) {
+        if (timer1 == nil && timer2 == nil && timer3 == nil) {
             timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
-//            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
-//            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
         }
         self.performSegue(withIdentifier: "showDetail", sender: self)
+        turnOffLights()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -61,9 +64,10 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
             printer.paper = 100
             printer.printerStatus = PrinterStatus.ACTIVE
             printer.printerGeneralState = UIColor.green
-            // changeState(sender: printer)
+            changeState(sender: printer)
             startTimer(sender: printer)
         }
+        turnOffLights()
         tableView.reloadData()
     }
 
@@ -135,36 +139,202 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
         printers[0].inkMagenta -= generateRandom()
         printers[0].paper -= generateRandom()
         printers[0].oil -= generateRandom()
+        // 249
+        fadeLamp(number: printers[0].paper, lampNr: 1)
+        if (!checkedCyan) {
+            if (printers[0].inkCyan <= 25) {
+                CyanLamp()
+                checkedCyan = true
+            }
+        }
+        if (!checkedMageta) {
+            if (printers[0].inkMagenta <= 25) {
+                MagentaLamp()
+                checkedMageta = true
+            }
+        }
     }
     
-//    @objc func timerPrinter2() {
-//        printers[1].inkCyan -= generateRandom()
-//        printers[1].inkKey -= generateRandom()
-//        printers[1].inkYellow -= generateRandom()
-//        printers[1].inkMagenta -= generateRandom()
-//        printers[1].paper -= generateRandom()
-//        printers[1].oil -= generateRandom()
-//    }
-//    
-//    @objc func timerPrinter3() {
-//        printers[2].inkCyan -= generateRandom()
-//        printers[2].inkKey -= generateRandom()
-//        printers[2].inkYellow -= generateRandom()
-//        printers[2].inkMagenta -= generateRandom()
-//        printers[2].paper -= generateRandom()
-//        printers[2].oil -= generateRandom()
-//    }
+    private func fadeLamp(number: Int, lampNr: Int)
+    {
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/\(lampNr)/state")!)
+        
+        UrlRequest.httpMethod = "PUT"
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(254, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(number*251, forKey: "hue")
+        
+        let jsonData:Data
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        } catch {
+            print("Error in jsonnnn")
+            return
+        }
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+        }.resume()
+    }
+    
+    private func CyanLamp()
+    {
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/4/state")!)
+        
+        UrlRequest.httpMethod = "PUT"
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(254, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(41000, forKey: "hue")
+        
+        let jsonData:Data
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        } catch {
+            print("Error in jsonnnn")
+            return
+        }
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+            }.resume()
+    }
+    
+    private func MagentaLamp()
+    {
+        var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")!)
+        
+        UrlRequest.httpMethod = "PUT"
+        UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+        UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+        
+        let jsonDictonary = NSMutableDictionary()
+        jsonDictonary.setValue(true, forKey: "on")
+        jsonDictonary.setValue(254, forKey: "sat")
+        jsonDictonary.setValue(200, forKey: "bri")
+        jsonDictonary.setValue(59000, forKey: "hue")
+        
+        let jsonData:Data
+        do {
+            jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+            UrlRequest.httpBody = jsonData
+        } catch {
+            print("Error in jsonnnn")
+            return
+        }
+        let session = URLSession.shared
+        session.dataTask(with: UrlRequest) { (data, response, error) in
+            if let response = response {
+                print(response)
+            }
+            if let data = data {
+                do {
+                    let json = try JSONSerialization.jsonObject(with: data, options: [])
+                    print(json)
+                } catch {
+                    print(error)
+                }
+            }
+            }.resume()
+    }
+    
+    private func turnOffLights() {
+        for i in 1...5 {
+            var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/\(i)/state")!)
+            
+            UrlRequest.httpMethod = "PUT"
+            UrlRequest.setValue("application/Json", forHTTPHeaderField: "Content-Type")
+            UrlRequest.setValue("N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI", forHTTPHeaderField: "Authorization Bearer ")
+            
+            let jsonDictonary = NSMutableDictionary()
+            jsonDictonary.setValue(false, forKey: "on")
+            
+            let jsonData:Data
+            do {
+                jsonData = try JSONSerialization.data(withJSONObject: jsonDictonary, options: JSONSerialization.WritingOptions())
+                UrlRequest.httpBody = jsonData
+            } catch {
+                print("Error in jsonnnn")
+                return
+            }
+            let session = URLSession.shared
+            session.dataTask(with: UrlRequest) { (data, response, error) in
+                if let response = response {
+                    print(response)
+                }
+                if let data = data {
+                    do {
+                        let json = try JSONSerialization.jsonObject(with: data, options: [])
+                        print(json)
+                    } catch {
+                        print(error)
+                    }
+                }
+                }.resume()
+        }
+        
+    }
+    
+    @objc func timerPrinter2() {
+        printers[1].inkCyan -= generateRandom()
+        printers[1].inkKey -= generateRandom()
+        printers[1].inkYellow -= generateRandom()
+        printers[1].inkMagenta -= generateRandom()
+        printers[1].paper -= generateRandom()
+        printers[1].oil -= generateRandom()
+    }
+    
+    @objc func timerPrinter3() {
+        printers[2].inkCyan -= generateRandom()
+        printers[2].inkKey -= generateRandom()
+        printers[2].inkYellow -= generateRandom()
+        printers[2].inkMagenta -= generateRandom()
+        printers[2].paper -= generateRandom()
+        printers[2].oil -= generateRandom()
+    }
     
     // Protocol methods
     func startTimer(sender: Printer) {
         if (sender.printerName == "Printer A")  {
             timer1 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter1), userInfo: nil, repeats: true)
+            turnOffLights()
         }
-//            else if (sender.printerName == "Printer B") {
-//            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
-//        } else if (sender.printerName == "Printer C") {
-//            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
-//        }
+        else if (sender.printerName == "Printer B") {
+            timer2 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter2), userInfo: nil, repeats: true)
+        } else if (sender.printerName == "Printer C") {
+            timer3 = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(MasterViewController.timerPrinter3), userInfo: nil, repeats: true)
+        }
         tableView.reloadData()
     }
     
@@ -172,12 +342,13 @@ class MasterViewController: UITableViewController, EventHandlerDelegate {
         if (sender.printerName == "Printer A")  {
             timer1?.invalidate()
         }
-//        else if (sender.printerName == "Printer B") {
-//            timer2?.invalidate()
-//        } else if (sender.printerName == "Printer C") {
-//            timer3?.invalidate()
-//        }
+        else if (sender.printerName == "Printer B") {
+            timer2?.invalidate()
+        } else if (sender.printerName == "Printer C") {
+            timer3?.invalidate()
+        }
         tableView.reloadData()
     }
+    
 }
 

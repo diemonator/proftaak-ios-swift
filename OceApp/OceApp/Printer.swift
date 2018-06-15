@@ -18,6 +18,7 @@ class Printer: NSObject {
     private var _magenta = 100
     private var _yellow = 100
     private var _key = 100
+    private var _paperLamp = 25000
     // Public fields
     var printerImage: UIImage
     var printerName: String
@@ -28,7 +29,6 @@ class Printer: NSObject {
         get { return _cyan }
         set (value) {
             if (value <= 25 && value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + "% RESET" }
-            else if (value == 50) { }
             else if (value > 0) { _cyan = value; stringCyan = "Cyan Ink: " + String(_cyan) + " %" }
             else if (value <= 0) { _cyan = 0; stringCyan = "Cyan Ink: " + String(_cyan) + " % RESET"; criticalState() }
         }
@@ -37,7 +37,6 @@ class Printer: NSObject {
         get { return _yellow }
         set (value) {
             if (value <= 25 && value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET" }
-            else if (value == 50) { }
             else if (value > 0) { _yellow = value; stringYellow = "Yellow Ink: " + String(_yellow) + " %" }
             else if (value <= 0) { _yellow = 0; stringYellow = "Yellow Ink: " + String(_yellow) + " % RESET"; criticalState() }
         }
@@ -45,8 +44,7 @@ class Printer: NSObject {
     var inkKey: Int {
         get { return _key }
         set (value) {
-            if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET"; KeyInkLamp() }
-            else if (value == 50) { }
+            if (value <= 25 && value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " % RESET"; }
             else if (value > 0) { _key = value; stringKey = "Key Ink: " + String(_key) + " %" }
             else if (value <= 0) { _key = 0; stringKey = "Key Ink: " + String(_key) + " % RESET"; criticalState() }
         }
@@ -55,7 +53,6 @@ class Printer: NSObject {
         get { return _magenta }
         set (value) {
             if (value <= 25 && value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET" }
-            else if (value == 50) { }
             else if (value > 0) { _magenta = value; stringMagenta = "Magenta Ink: " + String(_magenta) + " %" }
             else if (value <= 0) { _magenta = 0; stringMagenta = "Magenta Ink: " + String(_magenta) + " % RESET"; criticalState() }
         }
@@ -64,7 +61,6 @@ class Printer: NSObject {
         get { return _paper }
         set (value) {
             if (value <= 25 && value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " % RESET" }
-            else if (value == 50) { YellowLamp() }
             else if (value > 0) { _paper = value; stringPaper = "Paper: " + String(_paper) + " %" }
             else if (value <= 0) { _paper = 0; stringPaper = "Paper: " + String(_paper) + " % RESET"; criticalState() }
         }
@@ -77,6 +73,17 @@ class Printer: NSObject {
             else if (value <= 0) { _oil = 0; stringOil = "Oil: " + String(_oil) + " % RESET"; criticalState() }
         }
     }
+    
+    // Properties Lamps colors
+    var paperLamp: Int {
+        get { return _paperLamp }
+        set (value) {
+            if (value >= 1000) {
+                _paperLamp = value
+            }
+        }
+    }
+    
     // Properties Ints to String
     var stringCyan: String!
     var stringYellow: String!
@@ -98,9 +105,8 @@ class Printer: NSObject {
         delegate?.changeState(sender: self)
     }
     
-    private func YellowLamp()
+    /*private func YellowLamp()
     {
-        //URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")
         var UrlRequest = URLRequest(url: URL(string: "http:192.168.0.100/api/N5ez1VNBfUIY5lcWpRUv6B60hxSbe-UYrrTeYoeI/lights/3/state")!)
         
         UrlRequest.httpMethod = "PUT"
@@ -121,8 +127,6 @@ class Printer: NSObject {
             print("Error in jsonnnn")
             return
         }
-        //     let config = URLSessionConfiguration.default
-        //     let session = URLSession(configuration: config)
         let session = URLSession.shared
         session.dataTask(with: UrlRequest) { (data, response, error) in
             if let response = response {
@@ -161,8 +165,6 @@ class Printer: NSObject {
             print("Error in jsonnnn")
             return
         }
-        //     let config = URLSessionConfiguration.default
-        //     let session = URLSession(configuration: config)
         let session = URLSession.shared
         session.dataTask(with: UrlRequest) { (data, response, error) in
             if let response = response{
@@ -205,8 +207,6 @@ class Printer: NSObject {
                     print("Error in jsonnnn")
                     return
                 }
-                //     let config = URLSessionConfiguration.default
-                //     let session = URLSession(configuration: config)
                 var session = URLSession.shared
                 session.dataTask(with: UrlRequest) { (data, response, error) in
                     if let response = response {
@@ -222,7 +222,7 @@ class Printer: NSObject {
                     }
                 }.resume()
                 
-                sleep(15)
+                sleep(20)
                 
                 jsonDictonary = NSMutableDictionary()
                 
@@ -237,8 +237,6 @@ class Printer: NSObject {
                     print("Error in jsonnnn")
                     return
                 }
-                //     let config = URLSessionConfiguration.default
-                //     let session = URLSession(configuration: config)
                 session = URLSession.shared
                 session.dataTask(with: UrlRequest) { (data, response, error) in
                     if let response = response {
@@ -255,6 +253,6 @@ class Printer: NSObject {
                 }.resume()
             } while (true)
         }
-    }
+    }*/
 }
 
